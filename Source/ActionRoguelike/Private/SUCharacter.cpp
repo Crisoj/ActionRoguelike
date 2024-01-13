@@ -45,5 +45,7 @@ void ASUCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASUCharacter::MoveForward);
 
+	PlayerInputComponent->BindAxis("turn", this, &APawn::AddControllerYawInput);
+
 }
 
