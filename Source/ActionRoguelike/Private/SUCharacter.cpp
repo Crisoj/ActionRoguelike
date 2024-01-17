@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "SUCharacter.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "DrawDebugHelpers.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "SUInteractionComponent.h"
 
 // Sets default values
 ASUCharacter::ASUCharacter()
@@ -19,6 +19,8 @@ ASUCharacter::ASUCharacter()
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>("CameraComp");
 	CameraComp->SetupAttachment(SpringArmComp);
+
+	InteractionComp = CreateDefaultSubobject<USUInteractionComponent>("InteractionComp");
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
@@ -52,6 +54,7 @@ void ASUCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASUCharacter::PrimaryAttack);
+	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ASUCharacter::PrimaryInteract);
 
 }
 
@@ -91,7 +94,14 @@ void ASUCharacter::PrimaryAttack()
 
 
 	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
+}
 
+void ASUCharacter::PrimaryInteract() 
+{
+	if (InteractionComp) 
+	{
+		InteractionComp->PrimaryInteract();
+	}
 }
 
 
