@@ -6,6 +6,7 @@
 #include "DrawDebugHelpers.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "SUInteractionComponent.h"
+#include "SUAttributeComponent.h"
 
 // Sets default values
 ASUCharacter::ASUCharacter()
@@ -21,6 +22,8 @@ ASUCharacter::ASUCharacter()
 	CameraComp->SetupAttachment(SpringArmComp);
 
 	InteractionComp = CreateDefaultSubobject<USUInteractionComponent>("InteractionComp");
+
+	AttributeComp = CreateDefaultSubobject<USUAttributeComponent>("AttributeComp");
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
