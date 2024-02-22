@@ -20,7 +20,10 @@ ASUMagicProjectile::ASUMagicProjectile()
 	SphereComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	*/
 	SphereComp->SetCollisionProfileName("Projectile");
+<<<<<<< HEAD
 	SphereComp->OnComponentBeginOverlap.AddDynamic(this, &ASUMagicProjectile::OnActorOverlap);
+=======
+>>>>>>> parent of 1fd2175 (added new things)
 	RootComponent = SphereComp;
 
 	EffectComp = CreateDefaultSubobject<UParticleSystemComponent>("EffectComp");
