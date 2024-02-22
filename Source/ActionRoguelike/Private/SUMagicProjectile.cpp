@@ -5,6 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "SUAttributeComponent.h"
 
 // Sets default values
 ASUMagicProjectile::ASUMagicProjectile()
@@ -19,7 +20,7 @@ ASUMagicProjectile::ASUMagicProjectile()
 	SphereComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	*/
 	SphereComp->SetCollisionProfileName("Projectile");
-	SphereComp->OnComponentBeginOverlap.AddDynamic(this, &ASUMagicProjectile::OnActorBeginOverlap);
+	SphereComp->OnComponentBeginOverlap.AddDynamic(this, &ASUMagicProjectile::OnActorOverlap);
 	RootComponent = SphereComp;
 
 	EffectComp = CreateDefaultSubobject<UParticleSystemComponent>("EffectComp");
@@ -30,6 +31,20 @@ ASUMagicProjectile::ASUMagicProjectile()
 	MovementComp->bRotationFollowsVelocity = true;
 	MovementComp->bInitialVelocityInLocalSpace = true;
 
+}
+
+void OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor) 
+	{
+		USUAttributeComponent* AttributeComp = Cast<USUAttributeComponent>(OtherActor->GetComponentByClass(USUAttributeComponent::StaticClass()));
+		if (AttributeComp) 
+		{
+			AttributeComp->ApplyHealthChange(-20.0f);
+
+			bool Destroy();
+		}
+	}
 }
 
 // Called when the game starts or when spawned
